@@ -17,8 +17,10 @@ SESSION_CONFIGS = [
     ),
 ]
 
-PARTICIPANT_FIELDS = []
+PARTICIPANT_FIELDS = ['problems_1', 'problems_2', 'problems_3']
 SESSION_FIELDS = []
+
+LANGUAGE_CODE = 'en'
 
 REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = False
@@ -36,6 +38,6 @@ ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD', 'changeme')
 
 DEMO_PAGE_INTRO_HTML = ''
 
-SECRET_KEY = environ.get('OTREE_SECRET_KEY', '{{ secret_key }}')
+SECRET_KEY = environ.get('OTREE_SECRET_KEY', 'fallback-dev-secret-change-in-prod')
 
 INSTALLED_APPS = ['otree']

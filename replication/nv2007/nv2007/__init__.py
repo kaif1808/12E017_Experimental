@@ -330,7 +330,7 @@ def _live_task_handler(player, data):
     response_ms = int(data['response_ms'])
 
     key = f'problems_{task}'
-    problems = player.participant.vars[key]
+    problems = getattr(player.participant, key)
     prob = problems[idx]
     correct_ans = sum(prob)
     is_correct = (answer == correct_ans)
@@ -373,8 +373,7 @@ class Task1(Page):
     @staticmethod
     def vars_for_template(player):
         problems = generate_problems(player.participant.code, 1)
-        player.participant.vars['problems_1'] = problems
-        player.participant.vars['seed_1'] = hash((player.participant.code, 1)) % (2 ** 32)
+        player.participant.problems_1 = problems
         return dict(
             first_problem=problems[0],
             task_num=1,
@@ -398,7 +397,7 @@ class Task2(Page):
     @staticmethod
     def vars_for_template(player):
         problems = generate_problems(player.participant.code, 2)
-        player.participant.vars['problems_2'] = problems
+        player.participant.problems_2 = problems
         return dict(
             first_problem=problems[0],
             task_num=2,
@@ -427,7 +426,7 @@ class Task3(Page):
     @staticmethod
     def vars_for_template(player):
         problems = generate_problems(player.participant.code, 3)
-        player.participant.vars['problems_3'] = problems
+        player.participant.problems_3 = problems
         return dict(
             first_problem=problems[0],
             task_num=3,
