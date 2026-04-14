@@ -1,0 +1,45 @@
+{{ block styles }}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+    }
+    .task-addends {
+        font-family: 'Courier New', monospace;
+        font-size: 2rem;
+        text-align: right;
+        display: inline-block;
+        min-width: 120px;
+    }
+    .task-addend-row {
+        display: block;
+    }
+    .task-separator {
+        border-top: 2px solid #333;
+        width: 130px;
+        margin: 4px 0;
+    }
+    .tally {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 1rem;
+    }
+    .timer {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #c0392b;
+        margin-bottom: 1rem;
+    }
+    .btn-answer {
+        margin-top: 0.5rem;
+    }
+    .feedback {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        min-height: 1.5rem;
+    }
+    .feedback.correct { color: #27ae60; }
+    .feedback.incorrect { color: #c0392b; }
+</style>
+{{ endblock }}

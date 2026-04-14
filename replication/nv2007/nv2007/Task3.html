@@ -1,0 +1,117 @@
+{{ block title }}Task 3 (5 minutes){{ endblock }}
+
+{{ block content }}
+<div class="timer" id="timer-display">Time remaining: <span id="countdown"></span></div>
+<div class="tally">Correct answers so far: <span id="tally">0</span></div>
+
+<hr>
+
+<div id="problem-area" class="my-3">
+    <div class="task-addends" id="addend-list"></div>
+    <div class="task-separator"></div>
+    <div class="mt-2">
+        <input type="number" id="answer-input" class="form-control" style="width:160px; display:inline-block;"
+               placeholder="Your answer" autocomplete="off">
+        <button class="btn btn-primary btn-answer" id="submit-btn">Submit</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
+</div>
+
+<div id="task-complete" style="display:none;">
+    <p class="text-muted">Time is up! Your responses are being saved...</p>
+</div>
+
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+(function () {
+    var TASK_NUM = 3;
+    var firstProblem = {{ first_problem|json }};
+    var timeoutSeconds = {{ timeout_seconds }};
+
+    var currentIdx = 0;
+    var currentProblem = firstProblem;
+    var tally = 0;
+    var problemStartTime = Date.now();
+    var submitting = false;
+
+    function renderProblem(prob) {
+        var container = document.getElementById('addend-list');
+        container.innerHTML = '';
+        prob.forEach(function (n) {
+            var span = document.createElement('span');
+            span.className = 'task-addend-row';
+            span.textContent = n;
+            container.appendChild(span);
+        });
+        document.getElementById('answer-input').value = '';
+        document.getElementById('answer-input').focus();
+        document.getElementById('feedback').textContent = '';
+        document.getElementById('feedback').className = 'feedback';
+        problemStartTime = Date.now();
+    }
+
+    function submitAnswer() {
+        if (submitting) return;
+        var raw = document.getElementById('answer-input').value.trim();
+        if (raw === '') return;
+        var answer = parseInt(raw, 10);
+        if (isNaN(answer)) return;
+
+        submitting = true;
+        document.getElementById('submit-btn').disabled = true;
+        var response_ms = Date.now() - problemStartTime;
+        liveSend({ task: TASK_NUM, idx: currentIdx, answer: answer, response_ms: response_ms });
+    }
+
+    function liveRecv(data) {
+        submitting = false;
+        document.getElementById('submit-btn').disabled = false;
+
+        if (data.correct) {
+            tally++;
+            document.getElementById('tally').textContent = tally;
+            document.getElementById('feedback').textContent = '✓ Correct!';
+            document.getElementById('feedback').className = 'feedback correct';
+        } else {
+            document.getElementById('feedback').textContent = '✗ Incorrect';
+            document.getElementById('feedback').className = 'feedback incorrect';
+        }
+
+        if (data.next_problem) {
+            currentIdx = data.next_idx;
+            currentProblem = data.next_problem;
+            setTimeout(function () { renderProblem(currentProblem); }, 300);
+        } else {
+            document.getElementById('problem-area').style.display = 'none';
+            document.getElementById('task-complete').style.display = 'block';
+        }
+    }
+
+    window.liveRecv = liveRecv;
+
+    document.getElementById('answer-input').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); submitAnswer(); }
+    });
+    document.getElementById('submit-btn').addEventListener('click', submitAnswer);
+
+    var endTime = Date.now() + timeoutSeconds * 1000;
+    function updateCountdown() {
+        var remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
+        var m = Math.floor(remaining / 60);
+        var s = remaining % 60;
+        document.getElementById('countdown').textContent =
+            m + ':' + (s < 10 ? '0' : '') + s;
+        if (remaining === 0) {
+            document.getElementById('problem-area').style.display = 'none';
+            document.getElementById('task-complete').style.display = 'block';
+        }
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    renderProblem(firstProblem);
+}());
+</script>
+{{ endblock }}

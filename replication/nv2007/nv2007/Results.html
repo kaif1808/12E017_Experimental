@@ -1,0 +1,57 @@
+{{ block title }}Final Results and Payment{{ endblock }}
+
+{{ block content }}
+<h2>Study Complete — Your Results</h2>
+
+<h3>Performance Summary</h3>
+<table class="table table-bordered" style="max-width:500px;">
+    <thead>
+        <tr><th>Task</th><th>Your Score</th><th>Your Rank in Group</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Task 1 (Piece Rate)</td>
+            <td>{{ score1 }}</td>
+            <td>{{ rank1 }}</td>
+        </tr>
+        <tr>
+            <td>Task 2 (Tournament)</td>
+            <td>{{ score2 }}</td>
+            <td>{{ rank2 }}</td>
+        </tr>
+        <tr>
+            <td>Task 3 (Your choice: {{ choice3 }})</td>
+            <td>{{ score3 }}</td>
+            <td>—</td>
+        </tr>
+        <tr>
+            <td>Task 4 (Your choice for Task 1: {{ choice4 }})</td>
+            <td>{{ score1 }} (Task 1 score re-used)</td>
+            <td>—</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Payment</h3>
+<p>The randomly selected task for payment was: <strong>Task {{ paid_task }}</strong>.</p>
+<table class="table table-bordered" style="max-width:400px;">
+    <tbody>
+        <tr><td>Show-up fee</td><td>{{ showup_fee }}</td></tr>
+        <tr><td>Completion fee</td><td>{{ completion_fee }}</td></tr>
+        <tr><td>Task {{ paid_task }} earnings</td><td>{{ task_earnings }}</td></tr>
+        <tr><td>Belief bonus</td><td>{{ belief_bonus }}</td></tr>
+        <tr class="table-success"><td><strong>Total payment</strong></td><td><strong>{{ total_payoff }}</strong></td></tr>
+    </tbody>
+</table>
+
+<hr>
+<h3>Debrief</h3>
+<p>
+    This study replicates Niederle &amp; Vesterlund (2007), "Do Women Shy Away from Competition?
+    Do Men Compete Too Much?" published in the <em>Quarterly Journal of Economics</em>.
+    The original study found that women were less likely than men to choose the tournament
+    payment scheme, even after controlling for performance.
+    If you are interested in reading more, the paper is freely available online.
+</p>
+<p>Thank you for participating!</p>
+{{ endblock }}
