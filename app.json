@@ -1,0 +1,14 @@
+{
+  "name": "12E017 Experimental oTree",
+  "description": "Heroku metadata: subdir buildpack must run before Python. For GitHub-connected apps, run scripts/heroku-configure-subdir.sh after heroku login, or mirror this order in Dashboard → Settings → Buildpacks.",
+  "env": {
+    "PROJECT_PATH": {
+      "description": "Relative path from repo root to the oTree project (timanovsky subdir buildpack).",
+      "value": "replication/nv2007"
+    }
+  },
+  "buildpacks": [
+    { "url": "https://github.com/timanovsky/subdir-heroku-buildpack" },
+    { "url": "heroku/python" }
+  ]
+}
