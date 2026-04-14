@@ -1,0 +1,4 @@
+# oTree on Heroku: two process types (see https://github.com/oTree-org/oTree/blob/master/Procfile)
+# Requires working directory = folder containing settings.py (use subdir buildpack; see repo docs).
+web: otree prodserver1of2
+worker: otree prodserver2of2
