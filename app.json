@@ -1,9 +1,9 @@
 {
   "name": "12E017 Experimental oTree",
-  "description": "Heroku metadata: subdir buildpack must run before Python. For GitHub-connected apps, run scripts/heroku-configure-subdir.sh after heroku login, or mirror this order in Dashboard → Settings → Buildpacks.",
+  "description": "Heroku: subdir buildpack before Python; PROJECT_PATH must be a real config var on the app (Dashboard → Config vars, or scripts/heroku-configure-subdir.sh). app.json env is not auto-applied to existing GitHub-linked apps.",
   "env": {
     "PROJECT_PATH": {
-      "description": "Relative path from repo root to the oTree project (timanovsky subdir buildpack).",
+      "description": "Required for timanovsky subdir buildpack: relative path from repo root to the oTree app. Must be set as a Heroku config var or the build fails with PROJECT_PATH is undefined.",
       "value": "replication/nv2007"
     }
   },
