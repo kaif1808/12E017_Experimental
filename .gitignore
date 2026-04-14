@@ -1,0 +1,5 @@
+CLAUDE.md
+.cursor/
+.venv/
+AGENTS.md
+.cursor/hooks/state/continual-learning.json
